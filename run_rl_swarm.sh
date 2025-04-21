@@ -78,15 +78,7 @@ cat << "EOF"
 EOF
 
 while true; do
-    echo -en $GREEN_TEXT
-    read -p ">> Would you like to connect to the Testnet? [Y/n] " yn
-    echo -en $RESET_TEXT
-    yn=${yn:-Y}  # Default to "Y" if the user presses Enter
-    case $yn in
-        [Yy]*)  CONNECT_TO_TESTNET=True && break ;;
-        [Nn]*)  CONNECT_TO_TESTNET=False && break ;;
-        *)  echo ">>> Please answer yes or no." ;;
-    esac
+    CONNECT_TO_TESTNET=True && break
 done
 
 if [ "$CONNECT_TO_TESTNET" = "True" ]; then
@@ -189,15 +181,7 @@ HF_TOKEN=${HF_TOKEN:-""}
 if [ -n "${HF_TOKEN}" ]; then # Check if HF_TOKEN is already set and use if so. Else give user a prompt to choose.
     HUGGINGFACE_ACCESS_TOKEN=${HF_TOKEN}
 else
-    echo -en $GREEN_TEXT
-    read -p ">> Would you like to push models you train in the RL swarm to the Hugging Face Hub? [y/N] " yn
-    echo -en $RESET_TEXT
-    yn=${yn:-N} # Default to "N" if the user presses Enter
-    case $yn in
-        [Yy]*) read -p "Enter your Hugging Face access token: " HUGGINGFACE_ACCESS_TOKEN ;;
-        [Nn]*) HUGGINGFACE_ACCESS_TOKEN="None" ;;
-        *) echo ">>> No answer was given, so NO models will be pushed to Hugging Face Hub" && HUGGINGFACE_ACCESS_TOKEN="None" ;;
-    esac
+    HUGGINGFACE_ACCESS_TOKEN="None"
 fi
 
 echo_green ">> Good luck in the swarm!"
